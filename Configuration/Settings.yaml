@@ -1,0 +1,9 @@
+TYPO3:
+  Neos:
+    userInterface:
+      translation:
+        autoInclude:
+          'Dotpulse.ResponsiveTabs': ['NodeTypes/*']
+    typoScript:
+      autoInclude:
+        'Dotpulse.ResponsiveTabs': TRUE

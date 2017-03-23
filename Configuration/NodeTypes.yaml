@@ -1,0 +1,57 @@
+'TYPO3.Neos:ContentCollection':
+  constraints:
+    nodeTypes:
+      'Dotpulse.ResponsiveTabs:Content': FALSE
+
+'Dotpulse.ResponsiveTabs:ContentCollection':
+  superTypes:
+    'TYPO3.Neos:ContentCollection': TRUE
+  childNodes:
+    entry:
+      type: 'Dotpulse.ResponsiveTabs:Content'
+
+'Dotpulse.ResponsiveTabs:Container':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  ui:
+    label: i18n
+    group: 'structure'
+    icon: 'icon-ellipsis-horizontal'
+    inlineEditable: TRUE
+  childNodes:
+    main:
+      type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'Dotpulse.ResponsiveTabs:Content': TRUE
+
+'Dotpulse.ResponsiveTabs:Content':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  ui:
+    label: i18n
+    group: 'structure'
+    icon: 'icon-ellipsis-horizontal'
+    inlineEditable: TRUE
+  childNodes:
+    main:
+      type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          'Dotpulse.ResponsiveTabs:Container': FALSE
+  properties:
+    title:
+      type: string
+      ui:
+        inlineEditable: TRUE
+        aloha:
+          placeholder: Title
+          format: {}
+          table: {}
+          link: {}
+          list: {}
+          alignment: {}
+          formatlesspaste:
+            button: false
+            formatlessPasteOption: true

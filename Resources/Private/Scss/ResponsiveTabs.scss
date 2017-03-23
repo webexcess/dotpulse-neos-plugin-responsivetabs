@@ -1,0 +1,153 @@
+$responsive-tabs-breakpoint: 768px !default;
+
+//== Tabs
+$responsive-tabs-tab-item-background: #000 !default;
+$responsive-tabs-tab-item-color: #fff !default;
+$responsive-tabs-tab-item-padding: 10px 20px !default;
+$responsive-tabs-tab-item-border: 3px solid #fff !default;
+$responsive-tabs-tab-item-font-size: pixel(18) !default;
+$responsive-tabs-tab-item-font-weight: bold !default;
+
+$responsive-tabs-tab-item-hover-background: lighten($responsive-tabs-tab-item-background, 50) !default;
+$responsive-tabs-tab-item-hover-color: $responsive-tabs-tab-item-color !default;
+$responsive-tabs-tab-item-active-background: lighten($responsive-tabs-tab-item-background, 50) !default;
+$responsive-tabs-tab-item-active-color: $responsive-tabs-tab-item-color !default;
+
+//== Accordion
+$responsive-tabs-accordion-item-margin: 4px !default;
+$responsive-tabs-accordion-item-background: #000 !default;
+$responsive-tabs-accordion-item-color: #fff !default;
+$responsive-tabs-accordion-item-font-size: pixel(18) !default;
+$responsive-tabs-accordion-item-font-weight: bold !default;
+$responsive-tabs-accordion-item-padding: 10px 20px !default;
+
+$responsive-tabs-accordion-item-hover-background: lighten($responsive-tabs-accordion-item-background, 50) !default;
+$responsive-tabs-accordion-item-hover-color: $responsive-tabs-accordion-item-color !default;
+$responsive-tabs-accordion-item-active-background: lighten($responsive-tabs-accordion-item-background, 50) !default;
+$responsive-tabs-accordion-item-active-color: $responsive-tabs-accordion-item-color !default;
+
+//== Panel
+$responsive-tabs-tap-panel-padding: 60px 0 0 !default;
+$responsive-tabs-accordion-panel-padding: 35px 20px !default;
+
+
+//== REQUIRED for core functionality
+.responsive-tabs__heading {
+	display: none;
+}
+.responsive-tabs__list__item {
+	cursor: pointer;
+}
+
+@media (max-width: $responsive-tabs-breakpoint - 1) {
+	.responsive-tabs__list {
+		display: none;
+	}
+	.responsive-tabs__heading {
+		display: block;
+		cursor: pointer;
+	}
+	.responsive-tabs__panel--closed-accordion-only {
+		display: none;
+	}
+}
+
+@media (min-width: $responsive-tabs-breakpoint) {
+	.responsive-tabs__panel--closed-accordion-only {
+		display: block !important;
+	}
+}
+
+//== Basic Skin
+@mixin responsive-tabs-title($background-color, $background-color-hover, $color, $color-hover, $font-size, $font-weight, $padding) {
+	background-color: $background-color;
+	color: $color;
+	font-size: $font-size;
+	font-weight: $font-weight;
+	padding: $padding;
+	position: relative;
+	transition: background-color 0.2s ease, color 0.2s ease;
+
+	&:hover {
+		background-color: $background-color-hover;
+		color: $color-hover;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+
+.responsive-tabs__list {
+	margin-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+	display: flex;
+
+	.responsive-tabs__list__item {
+		@include responsive-tabs-title($responsive-tabs-tab-item-background, $responsive-tabs-tab-item-hover-background, $responsive-tabs-tab-item-color, $responsive-tabs-tab-item-hover-color, $responsive-tabs-tab-item-font-size, $responsive-tabs-tab-item-font-weight, $responsive-tabs-tab-item-padding);
+		flex-grow: 1;
+		flex-basis: 0;
+		max-width: 100%;
+		border-right: $responsive-tabs-tab-item-border;
+		text-align: center;
+
+		&.responsive-tabs__list__item--active {
+			background-color: $responsive-tabs-tab-item-active-background;
+			color: $responsive-tabs-tab-item-active-color;
+		}
+
+		&:last-child {
+			border-right: none;
+		}
+	}
+}
+
+.responsive-tabs__heading {
+	@include responsive-tabs-title($responsive-tabs-accordion-item-background, $responsive-tabs-accordion-item-hover-background, $responsive-tabs-accordion-item-color, $responsive-tabs-accordion-item-hover-color, $responsive-tabs-accordion-item-font-size, $responsive-tabs-accordion-item-font-weight, $responsive-tabs-accordion-item-padding);
+	margin-bottom: $responsive-tabs-accordion-item-margin;
+
+	&::after {
+		content: "";
+		display: block;
+		position: absolute;
+		right: 20px;
+		top: 40%;
+		width: 0;
+		height: 0;
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-top: 10px solid $responsive-tabs-accordion-item-color;
+	}
+
+	&.responsive-tabs__heading--active {
+		background-color: $responsive-tabs-accordion-item-active-background;
+		color: $responsive-tabs-accordion-item-active-color;
+		&::after {
+			border-bottom: 10px solid $responsive-tabs-accordion-item-active-color;
+			border-top: 0;
+		}
+	}
+}
+
+.responsive-tabs__panel {
+	padding: $responsive-tabs-tap-panel-padding;
+
+	@media (max-width: $responsive-tabs-breakpoint - 1) {
+		padding: $responsive-tabs-accordion-panel-padding;
+	}
+}
+
+//== Neos Backend
+.neos-responsive-tabs {
+	.neos-responsive-heading {
+		@extend .responsive-tabs__heading;
+		display: block;
+		&:hover {
+			background-color: $responsive-tabs-accordion-item-background;
+			color: $responsive-tabs-accordion-item-color;
+		}
+	}
+	.neos-responsive-panel {
+		padding: $responsive-tabs-accordion-panel-padding;
+	}
+}

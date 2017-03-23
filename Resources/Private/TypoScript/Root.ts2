@@ -1,0 +1,21 @@
+prototype(Dotpulse.ResponsiveTabs:Container) < prototype(TYPO3.TypoScript:Tag) {
+	tagName = 'div'
+	attributes.class = ${node.context.inBackend ? 'neos-responsive-tabs' : 'responsive-tabs'}
+
+	content = TYPO3.TypoScript:Collection {
+		collection = ${q(node).children('main').children().get()}
+		itemName = 'node'
+		itemRenderer = Dotpulse.ResponsiveTabs:Content
+	}
+}
+
+prototype(Dotpulse.ResponsiveTabs:Content) < prototype(TYPO3.Neos:Content) {
+	content = TYPO3.Neos:ContentCollection {
+		nodePath = 'main'
+		attributes {
+			class = 'neos-responsive-panel'
+			class.@process.collectionClass >
+			@if.isInBackend = ${node.context.inBackend}
+		}
+	}
+}
