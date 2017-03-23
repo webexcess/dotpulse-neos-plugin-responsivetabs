@@ -1,18 +1,9 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
-<f:if condition="{count}">
-	<f:then>
-		<f:render section="TabContainer" arguments="{_all}" />
-	</f:then>
-	<f:else>
-		<f:if condition="{neos:rendering.inBackend()}">
-			<p style="background:#d9534f;color:#fff;border:1px solid #d43f3a;padding: 10% 12px;text-align:center;cursor:pointer;font-size:20px;"><f:translate package="Dotpulse.ResponsiveTabs" id="noTabs" /></p>
-			<f:render section="TabContainer" arguments="{_all}" />
-		</f:if>
-	</f:else>
+<f:if condition="{neos:rendering.inBackend()}">
+	<div class="responsive-tabs__neos-plugin-title">{neos:backend.translate(id: 'ui.label', source: 'NodeTypes/Container', package: 'Dotpulse.ResponsiveTabs')}</div>
 </f:if>
 
-<f:section name="TabContainer">
-	<div{attributes -> f:format.raw()}>
-		{tabs -> f:format.raw()}
-	</div>
-</f:section>
+<div{attributes -> f:format.raw()}>
+	{tabMenu -> f:format.raw()}
+	{content -> f:format.raw()}
+</div>

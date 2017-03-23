@@ -7,3 +7,8 @@ TYPO3:
     typoScript:
       autoInclude:
         'Dotpulse.ResponsiveTabs': TRUE
+
+Dotpulse:
+  ResponsiveTabs:
+    includeCss: FALSE
+    includeJavascript: FALSE

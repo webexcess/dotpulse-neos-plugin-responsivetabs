@@ -1,21 +1,96 @@
-prototype(Dotpulse.ResponsiveTabs:Container) < prototype(TYPO3.TypoScript:Tag) {
-	tagName = 'div'
-	attributes.class = ${node.context.inBackend ? 'neos-responsive-tabs' : 'responsive-tabs'}
+prototype(Dotpulse.ResponsiveTabs:Container) < prototype(Content) {
+	attributes {
+		class = TYPO3.TypoScript:RawArray {
+			container = 'responsive-tabs'
+			backend = 'responsive-tabs__neos-backend'
+			backend.@if.isInBackend = ${node.context.inBackend}
+		}
+		id = ${'tablist_' + node.identifier}
+	}
 
-	content = TYPO3.TypoScript:Collection {
-		collection = ${q(node).children('main').children().get()}
-		itemName = 'node'
-		itemRenderer = Dotpulse.ResponsiveTabs:Content
+	menuAttributes = TYPO3.TypoScript:Attributes {
+		class = 'responsive-tabs__tablist'
+		role = 'tablist'
+	}
+
+	tabMenu = TYPO3.TypoScript:Tag {
+		tagName = 'ul'
+		attributes {
+			class = 'responsive-tabs__tablist'
+			role = 'tablist'
+		}
+		content = TYPO3.TypoScript:Collection {
+			collection = ${q(node).children('main').children('[instanceof Dotpulse.ResponsiveTabs:Content]').get()}
+			itemName = 'node'
+			iterationName = 'iterator'
+			itemRenderer = TYPO3.TypoScript:Tag {
+				tagName = 'li'
+				attributes {
+					class = TYPO3.TypoScript:RawArray {
+						tab = 'responsive-tabs__tab'
+						active = 'responsive-tabs__tab-active'
+						active.@if.isFirstElement = ${iterator.index == 0 ? true : false}
+					}
+					id = ${'tablist_' + node.identifier + '-tab_' + iterator.index}
+					aria-controls = ${'tablist_' + node.identifier + '-item_' + iterator.index}
+					title = ${q(node).property('title')}
+				}
+				content = ${q(node).property('title')}
+			}
+		}
+		@if.isNotInBackend = ${!node.context.inBackend}
+	}
+
+	content = ContentCollection {
+		nodePath = 'main'
+		attributes.class = 'responsive-tabs__wrapper'
 	}
 }
 
-prototype(Dotpulse.ResponsiveTabs:Content) < prototype(TYPO3.Neos:Content) {
-	content = TYPO3.Neos:ContentCollection {
+prototype(Dotpulse.ResponsiveTabs:Content) < prototype(Content) {
+	attributes {
+		id = ${'tablist_' + node.identifier + '-item_' + iterator.index}
+		class = TYPO3.TypoScript:RawArray {
+			item = 'responsive-tabs__item'
+			active = 'responsive-tabs__item-active'
+			active.@if.isFirstElement = ${iterator.index == 0 ? true : false}
+			@process.nodeType >
+		}
+	}
+
+	titleAttributes = TYPO3.TypoScript:Attributes {
+		class = 'responsive-tabs__title'
+	}
+	contentAttributes = TYPO3.TypoScript:Attributes {
+		class = 'responsive-tabs__content'
+	}
+
+	content = ContentCollection {
 		nodePath = 'main'
 		attributes {
-			class = 'neos-responsive-panel'
+			class = 'responsive-tabs__content-inner'
 			class.@process.collectionClass >
-			@if.isInBackend = ${node.context.inBackend}
 		}
+	}
+}
+
+prototype(Page) {
+	head.ResponsiveTabs = TYPO3.TypoScript:Tag {
+		tagName = 'link'
+		attributes {
+			rel = 'stylesheet'
+			href = TYPO3.TypoScript:ResourceUri {
+				path = 'resource://Dotpulse.ResponsiveTabs/Public/responsive-tabs.min.css'
+			}
+		}
+		@if.isEnabled = ${Configuration.setting('Dotpulse.ResponsiveTabs.includeCss')}
+	}
+	body.javascripts.ResponsiveTabs = TYPO3.TypoScript:Tag {
+		tagName = 'script'
+		attributes.src = TYPO3.TypoScript:ResourceUri {
+			path = 'resource://Dotpulse.ResponsiveTabs/Public/responsive-tabs.min.js'
+		}
+		@position = 'end'
+		@if.isEnabled = ${Configuration.setting('Dotpulse.ResponsiveTabs.includeJavascript')}
 	}
 }

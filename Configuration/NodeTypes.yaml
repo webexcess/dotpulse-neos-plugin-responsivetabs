@@ -3,13 +3,6 @@
     nodeTypes:
       'Dotpulse.ResponsiveTabs:Content': FALSE
 
-'Dotpulse.ResponsiveTabs:ContentCollection':
-  superTypes:
-    'TYPO3.Neos:ContentCollection': TRUE
-  childNodes:
-    entry:
-      type: 'Dotpulse.ResponsiveTabs:Content'
-
 'Dotpulse.ResponsiveTabs:Container':
   superTypes:
     'TYPO3.Neos:Content': TRUE
