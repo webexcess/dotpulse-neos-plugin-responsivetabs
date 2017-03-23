@@ -73,6 +73,7 @@ $responsive-tabs-accordion-panel-padding: 35px 20px !default;
 	font-weight: $font-weight;
 	padding: $padding;
 	position: relative;
+	line-height: 1;
 	transition: background-color 0.2s ease, color 0.2s ease;
 
 	&:hover {
@@ -101,6 +102,11 @@ $responsive-tabs-accordion-panel-padding: 35px 20px !default;
 		&.responsive-tabs__list__item--active {
 			background-color: $responsive-tabs-tab-item-active-background;
 			color: $responsive-tabs-tab-item-active-color;
+
+			&:hover {
+				background-color: $responsive-tabs-tab-item-hover-background;
+				color: $responsive-tabs-tab-item-hover-color;
+			}
 		}
 
 		&:last-child {
@@ -129,6 +135,12 @@ $responsive-tabs-accordion-panel-padding: 35px 20px !default;
 	&.responsive-tabs__heading--active {
 		background-color: $responsive-tabs-accordion-item-active-background;
 		color: $responsive-tabs-accordion-item-active-color;
+
+		&:hover {
+			background-color: $responsive-tabs-accordion-item-hover-background;
+			color: $responsive-tabs-accordion-item-hover-color;
+		}
+
 		&::after {
 			border-bottom: 10px solid $responsive-tabs-accordion-item-active-color;
 			border-top: 0;
