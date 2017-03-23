@@ -32,6 +32,13 @@ $responsive-tabs-accordion-panel-padding: 35px 20px !default;
 
 
 //== REQUIRED for core functionality
+.responsive-tabs {
+	display: none;
+}
+.responsive-tabs--enabled {
+	display: block;
+}
+
 .responsive-tabs__heading {
 	display: none;
 }
