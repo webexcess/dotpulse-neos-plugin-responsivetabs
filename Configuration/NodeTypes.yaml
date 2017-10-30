@@ -29,7 +29,7 @@
     inlineEditable: TRUE
   childNodes:
     main:
-      type: 'TYPO3.Neos:ContentCollection'
+      type: 'Neos.Neos:ContentCollection'
       constraints:
         nodeTypes:
           'Dotpulse.ResponsiveTabs:Container': FALSE
