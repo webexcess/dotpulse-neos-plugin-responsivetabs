@@ -1,10 +1,9 @@
 {
     "name": "dotpulse/responsivetabs",
-    "type": "typo3-flow-plugin",
+    "type": "neos-plugin",
     "description": "Add a tab contentelement",
-    "version": "2.2.0",
     "require": {
-        "typo3/neos-nodetypes": "2.*"
+        "neos/nodetypes": "3.*"
     },
     "extra": {
         "installer-name": "Dotpulse.ResponsiveTabs",

@@ -1,6 +1,6 @@
 prototype(Dotpulse.ResponsiveTabs:Container) < prototype(Content) {
 	attributes {
-		class = TYPO3.TypoScript:RawArray {
+		class = Neos.Fusion:RawArray {
 			container = 'responsive-tabs'
 			backend = 'responsive-tabs__neos-backend'
 			backend.@if.isInBackend = ${node.context.inBackend}
@@ -8,25 +8,25 @@ prototype(Dotpulse.ResponsiveTabs:Container) < prototype(Content) {
 		id = ${'tablist_' + node.identifier}
 	}
 
-	menuAttributes = TYPO3.TypoScript:Attributes {
+	menuAttributes = Neos.Fusion:Attributes {
 		class = 'responsive-tabs__tablist'
 		role = 'tablist'
 	}
 
-	tabMenu = TYPO3.TypoScript:Tag {
+	tabMenu = Neos.Fusion:Tag {
 		tagName = 'ul'
 		attributes {
 			class = 'responsive-tabs__tablist'
 			role = 'tablist'
 		}
-		content = TYPO3.TypoScript:Collection {
+		content = Neos.Fusion:Collection {
 			collection = ${q(node).children('main').children('[instanceof Dotpulse.ResponsiveTabs:Content]').get()}
 			itemName = 'node'
 			iterationName = 'iterator'
-			itemRenderer = TYPO3.TypoScript:Tag {
+			itemRenderer = Neos.Fusion:Tag {
 				tagName = 'li'
 				attributes {
-					class = TYPO3.TypoScript:RawArray {
+					class = Neos.Fusion:RawArray {
 						tab = 'responsive-tabs__tab'
 						active = 'responsive-tabs__tab-active'
 						active.@if.isFirstElement = ${iterator.index == 0 ? true : false}
@@ -50,7 +50,7 @@ prototype(Dotpulse.ResponsiveTabs:Container) < prototype(Content) {
 prototype(Dotpulse.ResponsiveTabs:Content) < prototype(Content) {
 	attributes {
 		id = ${'tablist_' + node.identifier + '-item_' + iterator.index}
-		class = TYPO3.TypoScript:RawArray {
+		class = Neos.Fusion:RawArray {
 			item = 'responsive-tabs__item'
 			active = 'responsive-tabs__item-active'
 			active.@if.isFirstElement = ${iterator.index == 0 ? true : false}
@@ -58,10 +58,10 @@ prototype(Dotpulse.ResponsiveTabs:Content) < prototype(Content) {
 		}
 	}
 
-	titleAttributes = TYPO3.TypoScript:Attributes {
+	titleAttributes = Neos.Fusion:Attributes {
 		class = 'responsive-tabs__title'
 	}
-	contentAttributes = TYPO3.TypoScript:Attributes {
+	contentAttributes = Neos.Fusion:Attributes {
 		class = 'responsive-tabs__content'
 	}
 
@@ -75,19 +75,19 @@ prototype(Dotpulse.ResponsiveTabs:Content) < prototype(Content) {
 }
 
 prototype(Page) {
-	head.ResponsiveTabs = TYPO3.TypoScript:Tag {
+	head.ResponsiveTabs = Neos.Fusion:Tag {
 		tagName = 'link'
 		attributes {
 			rel = 'stylesheet'
-			href = TYPO3.TypoScript:ResourceUri {
+			href = Neos.Fusion:ResourceUri {
 				path = 'resource://Dotpulse.ResponsiveTabs/Public/responsive-tabs.min.css'
 			}
 		}
 		@if.isEnabled = ${Configuration.setting('Dotpulse.ResponsiveTabs.includeCss')}
 	}
-	body.javascripts.ResponsiveTabs = TYPO3.TypoScript:Tag {
+	body.javascripts.ResponsiveTabs = Neos.Fusion:Tag {
 		tagName = 'script'
-		attributes.src = TYPO3.TypoScript:ResourceUri {
+		attributes.src = Neos.Fusion:ResourceUri {
 			path = 'resource://Dotpulse.ResponsiveTabs/Public/responsive-tabs.min.js'
 		}
 		@position = 'end'
