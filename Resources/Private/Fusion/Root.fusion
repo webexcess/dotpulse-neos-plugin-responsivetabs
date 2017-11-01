@@ -50,6 +50,7 @@ prototype(Dotpulse.ResponsiveTabs:Container) < prototype(Content) {
 prototype(Dotpulse.ResponsiveTabs:Content) < prototype(Content) {
 	attributes {
 		id = ${'tablist_' + node.identifier + '-item_' + iterator.index}
+		aria-labelledby = ${'tablist_' + node.identifier + '-tab_' + iterator.index}
 		class = Neos.Fusion:RawArray {
 			item = 'responsive-tabs__item'
 			active = 'responsive-tabs__item-active'
