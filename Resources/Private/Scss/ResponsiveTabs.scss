@@ -3,25 +3,35 @@ $responsive-tabs__breakpoint: 768px !default;
 $responsive-tabs__title-padding: 20px 25px !default;
 $responsive-tabs__title-color: #fff !default;
 $responsive-tabs__title-color-hover: #fff !default;
+$responsive-tabs__title-color-active: $responsive-tabs__title-color !default;
 $responsive-tabs__title-font-size: 24 !default;
 $responsive-tabs__title-font-weight: normal !default;
 $responsive-tabs__title-background: #000 !default;
 $responsive-tabs__title-background-hover: lighten($responsive-tabs__title-background, 30) !default;
+$responsive-tabs__title-background-active: $responsive-tabs__title-background !default;
 
 $responsive-tabs__tab-padding: 20px 25px !default;
 $responsive-tabs__tab-color: #fff !default;
-$responsive-tabs__tab-color-hover: #fff !default;
-$responsive-tabs__tab-color-active: #000 !default;
+$responsive-tabs__tab-color-hover: #000 !default;
+$responsive-tabs__tab-color-active: $responsive-tabs__tab-color-hover !default;
 $responsive-tabs__tab-font-size: 16 !default;
 $responsive-tabs__tab-font-weight: normal !default;
 $responsive-tabs__tab-line-color: #000 !default;
 $responsive-tabs__tab-line-size: 2px !default;
 $responsive-tabs__tab-background: #000 !default;
-$responsive-tabs__tab-background-hover: lighten($responsive-tabs__title-background, 30) !default;
-$responsive-tabs__tab-background-active: #fff !default;
+$responsive-tabs__tab-background-hover: #fff !default;
+$responsive-tabs__tab-background-active: $responsive-tabs__tab-background-hover !default;
 
 $responsive-tabs__content-inner-padding-accordion: 35px 20px !default;
 $responsive-tabs__content-inner-padding-tabs: 60px 0 0 !default;
+
+// scss-lint:disable SelectorFormat
+// scss-lint:disable QualifyingElement
+// scss-lint:disable ImportantRule
+
+.responsive-tabs {
+	margin-top: 40px;
+}
 
 .responsive-tabs__item {
 	padding-bottom: 4px;
@@ -55,17 +65,19 @@ $responsive-tabs__content-inner-padding-tabs: 60px 0 0 !default;
 	span.neos-inline-editable {
 		display: block;
 	}
+
 	&:hover {
 		color: $responsive-tabs__title-color-hover;
 		background-color: $responsive-tabs__title-background-hover;
 	}
+
 	&:focus {
 		color: $responsive-tabs__title-color;
 	}
 
 	&::after,
 	&::before {
-		content: "";
+		content: '';
 		border-radius: 2px;
 		display: block;
 		width: 25px;
@@ -77,14 +89,19 @@ $responsive-tabs__content-inner-padding-tabs: 60px 0 0 !default;
 		transform: translateY(-50%) translateZ(1px);
 		background: $responsive-tabs__title-color;
 	}
+
 	&::after {
 		transform: translateY(-50%) translateZ(1px) rotate(90deg);
 	}
 
 	.responsive-tabs__item-active & {
+		color: $responsive-tabs__title-color-active;
+		background-color: $responsive-tabs__title-background-active;
+
 		&::before {
 			transform: translateY(-50%) translateZ(1px) rotate(180deg);
 		}
+
 		&::after {
 			transform: translateY(-50%) translateZ(1px) rotate(-180deg);
 		}
@@ -138,6 +155,21 @@ $responsive-tabs__content-inner-padding-tabs: 60px 0 0 !default;
 	list-style: none;
 	display: none;
 	width: 100%;
+	position: relative;
+
+	border-left: $responsive-tabs__tab-line-size solid $responsive-tabs__tab-background;
+	border-right: $responsive-tabs__tab-line-size solid $responsive-tabs__tab-background;
+
+	&::before {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: $responsive-tabs__tab-line-size;
+		background-color: $responsive-tabs__tab-background;
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
 
 	@media (min-width: $responsive-tabs__breakpoint) {
 		display: flex;
@@ -157,11 +189,7 @@ $responsive-tabs__content-inner-padding-tabs: 60px 0 0 !default;
 	line-height: 1;
 	color: $responsive-tabs__tab-color;
 	text-align: center;
-
 	background-color: $responsive-tabs__tab-background;
-	border-top: $responsive-tabs__tab-line-size solid $responsive-tabs__tab-background;
-	border-left: $responsive-tabs__tab-line-size solid $responsive-tabs__tab-background;
-	border-right: $responsive-tabs__tab-line-size solid $responsive-tabs__tab-background;
 
 	position: relative;
 	cursor: pointer;
@@ -173,13 +201,33 @@ $responsive-tabs__content-inner-padding-tabs: 60px 0 0 !default;
 	flex-grow: 1;
 	flex-basis: 0;
 	min-width: 1%;
-	transition: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease;
+	transition: color 0.4s ease, background-color 0.4s ease;
+
+	+ .responsive-tabs__tab {
+		&::before {
+			content: '';
+			position: absolute;
+			width: $responsive-tabs__tab-line-size;
+			height: 100%;
+			background-color: $responsive-tabs__tab-background-active;
+			top: 0;
+			left: 0;
+			z-index: 2;
+		}
+	}
 
 	&:hover {
 		color: $responsive-tabs__tab-color-hover;
 		background-color: $responsive-tabs__tab-background-hover;
-		border-color: $responsive-tabs__tab-background-hover;
+
+		&,
+		+ .responsive-tabs__tab {
+			&::before {
+				z-index: 0;
+			}
+		}
 	}
+
 	&:focus {
 		color: $responsive-tabs__tab-color;
 	}
@@ -187,6 +235,13 @@ $responsive-tabs__content-inner-padding-tabs: 60px 0 0 !default;
 	&.responsive-tabs__tab-active {
 		background-color: $responsive-tabs__tab-background-active;
 		color: $responsive-tabs__tab-color-active;
+
+		&,
+		+ .responsive-tabs__tab {
+			&::before {
+				z-index: 0;
+			}
+		}
 	}
 }
 

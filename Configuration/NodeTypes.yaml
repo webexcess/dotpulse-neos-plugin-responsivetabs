@@ -1,43 +1,43 @@
 'Neos.Neos:ContentCollection':
   constraints:
     nodeTypes:
-      'Dotpulse.ResponsiveTabs:Content': FALSE
+      'Dotpulse.ResponsiveTabs:Content': false
 
 'Dotpulse.ResponsiveTabs:Container':
   superTypes:
-    'Neos.Neos:Content': TRUE
+    'Neos.Neos:Content': true
   ui:
     label: i18n
     group: 'structure'
     icon: 'icon-ellipsis-horizontal'
-    inlineEditable: TRUE
+    inlineEditable: true
   childNodes:
     main:
       type: 'Neos.Neos:ContentCollection'
       constraints:
         nodeTypes:
-          '*': FALSE
-          'Dotpulse.ResponsiveTabs:Content': TRUE
+          '*': false
+          'Dotpulse.ResponsiveTabs:Content': true
 
 'Dotpulse.ResponsiveTabs:Content':
   superTypes:
-    'Neos.Neos:Content': TRUE
+    'Neos.Neos:Content': true
   ui:
     label: i18n
     group: 'structure'
     icon: 'icon-ellipsis-horizontal'
-    inlineEditable: TRUE
+    inlineEditable: true
   childNodes:
     main:
       type: 'Neos.Neos:ContentCollection'
       constraints:
         nodeTypes:
-          'Dotpulse.ResponsiveTabs:Container': FALSE
+          'Dotpulse.ResponsiveTabs:Container': false
   properties:
     title:
       type: string
       ui:
-        inlineEditable: TRUE
+        inlineEditable: true
         aloha:
           placeholder: Title
           format: {}

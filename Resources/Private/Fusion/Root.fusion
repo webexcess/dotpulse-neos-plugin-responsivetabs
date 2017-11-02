@@ -50,20 +50,24 @@ prototype(Dotpulse.ResponsiveTabs:Container) < prototype(Content) {
 prototype(Dotpulse.ResponsiveTabs:Content) < prototype(Content) {
 	attributes {
 		id = ${'tablist_' + node.identifier + '-item_' + iterator.index}
-		aria-labelledby = ${'tablist_' + node.identifier + '-tab_' + iterator.index}
 		class = Neos.Fusion:RawArray {
 			item = 'responsive-tabs__item'
-			active = 'responsive-tabs__item-active'
+			active = 'responsive-tabs__item-closed-accordion-only'
 			active.@if.isFirstElement = ${iterator.index == 0 ? true : false}
 			@process.nodeType >
 		}
+		aria-labelledby = ${'tablist_' + node.identifier + '-tab_' + iterator.index}
 	}
 
 	titleAttributes = Neos.Fusion:Attributes {
-		class = 'responsive-tabs__title'
+		class = Neos.Fusion:RawArray {
+			default = 'responsive-tabs__title'
+		}
 	}
 	contentAttributes = Neos.Fusion:Attributes {
-		class = 'responsive-tabs__content'
+		class = Neos.Fusion:RawArray {
+			default = 'responsive-tabs__content'
+		}
 	}
 
 	content = ContentCollection {
@@ -81,7 +85,7 @@ prototype(Page) {
 		attributes {
 			rel = 'stylesheet'
 			href = Neos.Fusion:ResourceUri {
-				path = 'resource://Dotpulse.ResponsiveTabs/Public/responsive-tabs.min.css'
+				path = 'resource://Dotpulse.ResponsiveTabs/Public/Main.css'
 			}
 		}
 		@if.isEnabled = ${Configuration.setting('Dotpulse.ResponsiveTabs.includeCss')}
@@ -89,7 +93,7 @@ prototype(Page) {
 	body.javascripts.ResponsiveTabs = Neos.Fusion:Tag {
 		tagName = 'script'
 		attributes.src = Neos.Fusion:ResourceUri {
-			path = 'resource://Dotpulse.ResponsiveTabs/Public/responsive-tabs.min.js'
+			path = 'resource://Dotpulse.ResponsiveTabs/Public/Main.js'
 		}
 		@position = 'end'
 		@if.isEnabled = ${Configuration.setting('Dotpulse.ResponsiveTabs.includeJavascript')}

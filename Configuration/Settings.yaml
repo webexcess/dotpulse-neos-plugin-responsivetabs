@@ -6,9 +6,9 @@ Neos:
           'Dotpulse.ResponsiveTabs': ['NodeTypes/*']
     fusion:
       autoInclude:
-        'Dotpulse.ResponsiveTabs': TRUE
+        'Dotpulse.ResponsiveTabs': true
 
 Dotpulse:
   ResponsiveTabs:
-    includeCss: FALSE
-    includeJavascript: FALSE
+    includeCss: false
+    includeJavascript: false
